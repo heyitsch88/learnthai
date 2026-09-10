@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thai Adjectives Flashcard Review</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- Google Fonts: Sarabun & Noto Sans Thai provide crystal-clear traditional looped letterforms -->
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Sarabun:wght@400;500;600;700;800&family=Noto+Sans+Thai:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    /* Highly readable looped Thai typography with generous vertical clearance for tone marks */
+    .font-thai {
+      font-family: 'Sarabun', 'Noto Sans Thai', -apple-system, sans-serif;
+      letter-spacing: 0.03em;
+      line-height: 1.6;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+    }
+    .perspective-1000 {
+      perspective: 1000px;
+    }
+    .transform-style-3d {
+      transform-style: preserve-3d;
+    }
+    .backface-hidden {
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+    .rotate-y-180 {
+      transform: rotateY(180deg);
+    }
+    /* Custom subtle scrollbar */
+    .custom-scroll::-webkit-scrollbar {
+      height: 6px;
+      width: 6px;
+    }
+    .custom-scroll::-webkit-scrollbar-track {
+      background: #f1f5f9;
+      border-radius: 9999px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen flex flex-col antialiased selection:bg-amber-500 selection:text-white">
+
+  <!-- Header Bar -->
+  <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-xs">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 py-3.5 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-amber-500 to-rose-500 flex items-center justify-center text-white text-xl font-black shadow-sm shadow-amber-500/20">
+          🇹🇭
+        </div>
+        <div>
+          <h1 class="text-base sm:text-lg font-bold text-slate-900 leading-tight">Thai Adjectives & Expressions</h1>
+          <p class="text-xs text-slate-500">Format: <span class="font-thai font-semibold text-slate-700">คำไทย</span> (romanized phonetics)</p>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <nav class="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl text-xs font-semibold text-slate-600">
+        <button onclick="switchTab('flashcards')" id="tab-flashcards" class="tab-btn px-3 py-1.5 rounded-lg bg-white text-slate-900 shadow-xs transition-all">🗂️ Cards</button>
+        <button onclick="switchTab('quiz')" id="tab-quiz" class="tab-btn px-3 py-1.5 rounded-lg hover:text-slate-900 transition-all">🎯 Quiz</button>
+        <button onclick="switchTab('match')" id="tab-match" class="tab-btn px-3 py-1.5 rounded-lg hover:text-slate-900 transition-all">🧩 Match</button>
+        <button onclick="switchTab('list')" id="tab-list" class="tab-btn px-3 py-1.5 rounded-lg hover:text-slate-900 transition-all">📋 Word List</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 py-6 w-full flex-1 flex flex-col">
+
+    <!-- Global Filter & Size Controls -->
+    <section class="mb-6 flex flex-wrap items-center justify-between gap-3 bg-white p-3.5 rounded-2xl border border-slate-200 shadow-xs">
+      <!-- Category Filter Chips -->
+      <div class="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 max-w-full custom-scroll text-xs">
+        <span class="text-slate-400 font-medium whitespace-nowrap pl-1 mr-1">Category:</span>
+        <button onclick="setFilter('all')" id="filter-all" class="category-btn px-3 py-1.5 rounded-lg font-bold bg-amber-500 text-white shadow-xs whitespace-nowrap transition-all">All (<span id="count-all">43</span>)</button>
+        <button onclick="setFilter('size')" id="filter-size" class="category-btn px-3 py-1.5 rounded-lg font-medium bg-slate-100 hover:bg-slate-200 text-slate-700 whitespace-nowrap transition-all">Size & Dimensions</button>
+        <button onclick="setFilter('appearance')" id="filter-appearance" class="category-btn px-3 py-1.5 rounded-lg font-medium bg-slate-100 hover:bg-slate-200 text-slate-700 whitespace-nowrap transition-all">Appearance</button>
+        <button onclick="setFilter('state')" id="filter-state" class="category-btn px-3 py-1.5 rounded-lg font-medium bg-slate-100 hover:bg-slate-200 text-slate-700 whitespace-nowrap transition-all">States & Feelings</button>
+        <button onclick="setFilter('taste')" id="filter-taste" class="category-btn px-3 py-1.5 rounded-lg font-medium bg-slate-100 hover:bg-slate-200 text-slate-700 whitespace-nowrap transition-all">Taste & Food</button>
+        <button onclick="setFilter('grammar')" id="filter-grammar" class="category-btn px-3 py-1.5 rounded-lg font-medium bg-slate-100 hover:bg-slate-200 text-slate-700 whitespace-nowrap transition-all">Grammar & People</button>
+        <button onclick="setFilter('needs-work')" id="filter-needs-work" class="category-btn px-3 py-1.5 rounded-lg font-medium bg-rose-50 text-rose-600 hover:bg-rose-100 whitespace-nowrap transition-all">⚠️ Needs Practice (<span id="count-needs-work">0</span>)</button>
+      </div>
+
+      <!-- Quick Audio & Thai Font Size Controls -->
+      <div class="flex items-center gap-2 text-xs ml-auto">
+        <button onclick="cycleThaiFontSize()" id="thai-size-btn" class="px-2.5 py-1.5 rounded-lg border border-amber-300 bg-amber-50 hover:bg-amber-100 text-amber-900 flex items-center gap-1 font-semibold transition-colors shadow-2xs" title="Toggle Thai text size">
+          <span>🔍</span>
+          <span id="thai-size-label">Thai: Large</span>
+        </button>
+        <button onclick="toggleSlowAudio()" id="slow-audio-btn" class="px-2.5 py-1.5 rounded-lg border border-slate-200 text-slate-700 hover:bg-slate-100 flex items-center gap-1 font-medium transition-colors" title="Toggle turtle speech speed">
+          <span>🐢</span>
+          <span id="slow-audio-label">Normal Speed</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- VIEW 1: FLASHCARDS -->
+    <div id="view-flashcards" class="flex-1 flex flex-col">
+      <!-- Progress & Card Navigation Status -->
+      <div class="flex items-center justify-between text-xs text-slate-500 mb-3 px-1">
+        <div class="flex items-center gap-2">
+          <span class="font-bold text-slate-800 text-sm" id="card-counter">Card 1 of 43</span>
+          <span class="text-slate-300">•</span>
+          <span id="card-category-badge" class="px-2.5 py-0.5 rounded-full bg-slate-200 text-slate-700 font-semibold uppercase text-[10px] tracking-wide">Size</span>
+        </div>
+        <div class="flex items-center gap-3">
+          <button onclick="toggleStarCurrent()" id="btn-star" class="text-slate-400 hover:text-amber-500 text-base transition-colors" title="Star this word">⭐</button>
+          <span class="text-slate-400 font-mono text-[11px] hidden sm:inline"><kbd class="bg-slate-200 px-1.5 py-0.5 rounded">Space</kbd> Flip | <kbd class="bg-slate-200 px-1.5 py-0.5 rounded">←</kbd><kbd class="bg-slate-200 px-1.5 py-0.5 rounded ml-0.5">→</kbd> Navigate</span>
+        </div>
+      </div>
+
+      <!-- Flashcard Interactive 3D Container -->
+      <div class="relative w-full max-w-2xl mx-auto h-[23rem] sm:h-[25rem] perspective-1000 select-none">
+        <div id="flashcard-inner" onclick="flipCard()" class="w-full h-full relative transform-style-3d transition-transform duration-500 cursor-pointer shadow-xl rounded-3xl border border-slate-200/80">
+          
+          <!-- FRONT FACE: Thai script first + phonetics in parentheses -->
+          <div class="absolute inset-0 backface-hidden bg-white rounded-3xl p-6 sm:p-8 flex flex-col justify-between items-center text-center border-b-4 border-amber-500">
+            <!-- Front Top Action Bar -->
+            <div class="w-full flex items-center justify-between text-xs text-slate-400">
+              <span class="inline-flex items-center gap-1 font-medium bg-slate-100 px-2.5 py-1 rounded-full text-slate-600">
+                <span>🔊</span> Tap audio to listen
+              </span>
+              <button onclick="event.stopPropagation(); playCurrentAudio()" class="w-10 h-10 rounded-full bg-amber-50 hover:bg-amber-100 text-amber-700 flex items-center justify-center text-lg transition-all shadow-xs" title="Listen pronunciation">
+                🔊
+              </button>
+            </div>
+
+            <!-- Required Strict Format: Thai script first, followed by phonetics in parentheses -->
+            <div class="my-auto px-2 py-3 w-full">
+              <div class="font-thai text-5xl sm:text-6xl md:text-7xl font-bold text-slate-950 tracking-wide leading-relaxed mb-3" id="card-thai-script">
+                เล็ก
+              </div>
+              <div class="text-xl sm:text-2xl font-bold text-rose-600" id="card-romanization">
+                (lék)
+              </div>
+              <div class="mt-3 text-xs sm:text-sm font-thai text-slate-700 bg-slate-100 border border-slate-200 px-3 py-1.5 rounded-lg inline-block font-semibold" id="card-formatted-full">
+                เล็ก (lék)
+              </div>
+            </div>
+
+            <!-- Front Bottom Flip Prompt -->
+            <div class="w-full flex items-center justify-center gap-1 text-xs font-medium text-slate-400">
+              <span>🔄 Tap or press Spacebar to see English meaning</span>
+            </div>
+          </div>
+
+          <!-- BACK FACE: English Meaning, Opposite Pairs, and Spoken Example Sentence -->
+          <div class="absolute inset-0 backface-hidden rotate-y-180 bg-slate-900 text-white rounded-3xl p-6 sm:p-8 flex flex-col justify-between items-center text-center border-b-4 border-rose-500">
+            <!-- Back Top Header -->
+            <div class="w-full flex items-center justify-between text-xs text-slate-400">
+              <span class="text-amber-400 font-semibold uppercase tracking-wider text-[10px]" id="card-back-cat">DIMENSIONS</span>
+              <button onclick="event.stopPropagation(); playCurrentAudio()" class="w-10 h-10 rounded-full bg-slate-800 hover:bg-slate-700 text-amber-400 flex items-center justify-center text-lg transition-all" title="Listen pronunciation">
+                🔊
+              </button>
+            </div>
+
+            <!-- English Meaning & Opposite Pair -->
+            <div class="my-auto w-full px-2">
+              <h2 class="text-2xl sm:text-3xl font-extrabold text-white tracking-tight" id="card-english">
+                Small
+              </h2>
+              <div class="mt-1 font-thai text-base text-rose-300 font-semibold" id="card-back-header">
+                เล็ก (lék)
+              </div>
+
+              <!-- Opposite Pair Box -->
+              <div id="card-opposite-container" class="mt-3 bg-slate-800/80 border border-slate-700 px-3.5 py-1.5 rounded-xl inline-block max-w-full">
+                <span class="text-[11px] text-slate-400 font-medium">Opposite Pair: </span>
+                <span id="card-opposite-text" class="text-sm font-semibold text-amber-300 font-thai">ใหญ่ (yài) - Big</span>
+              </div>
+
+              <!-- Practical Example Sentence -->
+              <div class="mt-3.5 text-left bg-slate-800/70 p-3.5 rounded-xl border border-slate-700/80">
+                <p class="text-[11px] text-slate-400 font-medium mb-1">Practical Spoken Context:</p>
+                <p class="font-thai text-base sm:text-lg text-amber-100 font-semibold leading-relaxed tracking-wide" id="card-example-thai">ห้องนี้เล็กมาก</p>
+                <p class="text-xs text-rose-300 font-medium" id="card-example-phonetics">hâawng níi lék mâak</p>
+                <p class="text-xs text-slate-300 italic" id="card-example-en">This room is very small.</p>
+              </div>
+            </div>
+
+            <!-- Back Bottom Prompt -->
+            <div class="w-full flex items-center justify-center text-xs text-slate-400 font-medium">
+              <span>🔄 Tap or press Spacebar to flip back</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Card Action & Paging Buttons -->
+      <div class="max-w-2xl mx-auto w-full mt-5 flex flex-wrap items-center justify-between gap-3">
+        <!-- Prev / Next Navigation -->
+        <div class="flex items-center gap-2">
+          <button onclick="prevCard()" class="px-3.5 py-2 rounded-xl bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 font-semibold text-xs flex items-center gap-1 shadow-xs transition-all active:scale-95">
+            <span>←</span> Prev
+          </button>
+          <button onclick="nextCard()" class="px-3.5 py-2 rounded-xl bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 font-semibold text-xs flex items-center gap-1 shadow-xs transition-all active:scale-95">
+            Next <span>→</span>
+          </button>
+          <button onclick="shuffleDeck()" class="p-2 rounded-xl bg-white border border-slate-300 hover:bg-slate-100 text-slate-700 text-xs shadow-xs transition-all" title="Shuffle Cards">
+            🔀
+          </button>
+        </div>
+
+        <!-- Retention Self-Rating Buttons -->
+        <div class="flex items-center gap-2">
+          <button onclick="markCard(false)" class="px-3.5 py-2 rounded-xl bg-rose-50 hover:bg-rose-100 border border-rose-200 text-rose-700 font-semibold text-xs flex items-center gap-1 transition-all active:scale-95">
+            <span>⚠️</span> Study Again
+          </button>
+          <button onclick="markCard(true)" class="px-3.5 py-2 rounded-xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 text-emerald-700 font-semibold text-xs flex items-center gap-1 transition-all active:scale-95">
+            <span>✓</span> Got It!
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 2: QUIZ -->
+    <div id="view-quiz" class="hidden flex-1 flex flex-col max-w-2xl mx-auto w-full">
+      <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm flex-1 flex flex-col justify-between">
+        
+        <!-- Quiz Progress Bar -->
+        <div>
+          <div class="flex items-center justify-between text-xs text-slate-500 mb-2 font-semibold">
+            <span id="quiz-progress-text">Question 1 of 10</span>
+            <span>Score: <span id="quiz-score" class="text-emerald-600 font-bold">0</span></span>
+          </div>
+          <div class="w-full h-2 bg-slate-100 rounded-full overflow-hidden">
+            <div id="quiz-progress-bar" class="h-full bg-amber-500 rounded-full transition-all duration-300" style="width: 10%;"></div>
+          </div>
+        </div>
+
+        <!-- Quiz Question Center -->
+        <div class="text-center py-6">
+          <span class="text-xs font-semibold tracking-wider text-slate-400 uppercase">What is the English meaning of:</span>
+          <div class="mt-3 p-5 bg-slate-50 rounded-2xl border border-slate-200/80">
+            <h3 class="font-thai text-3xl sm:text-4xl md:text-5xl font-bold text-slate-950 leading-relaxed mb-2 tracking-wide" id="quiz-thai-word">
+              สะอาด (sà-àat)
+            </h3>
+            <button onclick="playQuizAudio()" class="mt-1 text-xs font-semibold text-amber-600 hover:text-amber-700 inline-flex items-center gap-1">
+              🔊 Listen pronunciation
+            </button>
+          </div>
+        </div>
+
+        <!-- 4 Multiple Choice Options -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="quiz-options-container">
+          <!-- Populated dynamically by JavaScript -->
+        </div>
+
+        <!-- Quiz Next Button -->
+        <div class="mt-6 flex justify-end">
+          <button id="quiz-next-btn" onclick="nextQuizQuestion()" class="hidden px-5 py-2.5 bg-slate-900 hover:bg-slate-800 text-white rounded-xl text-xs font-bold transition-all shadow-xs">
+            Next Question →
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 3: MATCH GAME -->
+    <div id="view-match" class="hidden flex-1 flex flex-col max-w-3xl mx-auto w-full">
+      <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-sm flex-1 flex flex-col">
+        <div class="flex items-center justify-between mb-4">
+          <div>
+            <h3 class="font-bold text-slate-900 text-sm sm:text-base">Match Thai Pairs & Opposites</h3>
+            <p class="text-xs text-slate-500">Tap a Thai script tile, then tap its matching English translation!</p>
+          </div>
+          <button onclick="initMatchGame()" class="px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-100 text-xs font-semibold text-slate-700 transition-colors">
+            🔄 New Game
+          </button>
+        </div>
+
+        <!-- 12 Match Tiles Grid -->
+        <div id="match-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3 my-auto py-2">
+          <!-- Populated by JavaScript -->
+        </div>
+
+        <!-- Win Banner -->
+        <div id="match-win-msg" class="hidden mt-4 p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-center">
+          <p class="text-emerald-800 font-bold text-sm">🎉 Excellent work! All pairs matched correctly.</p>
+          <button onclick="initMatchGame()" class="mt-2 px-4 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-lg transition-all">Play Again</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW 4: WORD LIST TABLE -->
+    <div id="view-list" class="hidden flex-1 flex flex-col w-full">
+      <div class="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm">
+        <!-- Search bar inside table -->
+        <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+          <div class="relative flex-1 min-w-[200px]">
+            <input type="text" id="table-search" oninput="filterWordTable()" placeholder="Search Thai, romanization, or English..." class="w-full pl-9 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:bg-white focus:outline-none focus:ring-2 focus:ring-amber-500">
+            <span class="absolute left-3 top-2.5 text-slate-400 text-xs">🔍</span>
+          </div>
+          <span class="text-xs text-slate-500 font-medium">Showing <span id="table-count" class="font-bold text-slate-800">43</span> words</span>
+        </div>
+
+        <!-- Table Container -->
+        <div class="overflow-x-auto custom-scroll rounded-2xl border border-slate-200">
+          <table class="w-full text-left border-collapse text-xs">
+            <thead>
+              <tr class="bg-slate-100 text-slate-600 font-semibold border-b border-slate-200">
+                <th class="py-3 px-3.5">#</th>
+                <th class="py-3 px-3.5">Thai Script & Romanization</th>
+                <th class="py-3 px-3.5">English Translation</th>
+                <th class="py-3 px-3.5">Category</th>
+                <th class="py-3 px-3.5 text-center">Listen</th>
+              </tr>
+            </thead>
+            <tbody id="vocab-table-body" class="divide-y divide-slate-100">
+              <!-- Rendered dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    // Complete lesson dataset: all 42+ adjectives, comparatives, and core routine terms
+    const vocabData = [
+      { id: 1, thai: 'เล็ก', phonetic: 'lék', english: 'Small', category: 'size', opposite: 'ใหญ่ (yài) - Big', exampleThai: 'ห้องนี้เล็กมาก', examplePhonetic: 'hâawng níi lék mâak', exampleEn: 'This room is very small.' },
+      { id: 2, thai: 'ใหญ่', phonetic: 'yài', english: 'Big', category: 'size', opposite: 'เล็ก (lék) - Small', exampleThai: 'บ้านของเขามีขนาดใหญ่', examplePhonetic: 'bâan khăawng khăo mii khà-nàat yài', exampleEn: 'His house has a big size.' },
+      { id: 3, thai: 'สูง', phonetic: 'sŭung', english: 'Tall (height)', category: 'size', opposite: 'เตี้ย (tîa) - Short', exampleThai: 'ผู้ชายคนนั้นตัวสูงมาก', examplePhonetic: 'phûu-chaai khon nán dtuua sŭung mâak', exampleEn: 'That man is very tall.' },
+      { id: 4, thai: 'เตี้ย', phonetic: 'tîa', english: 'Short (height)', category: 'size', opposite: 'สูง (sŭung) - Tall', exampleThai: 'ต้นไม้ต้นนี้ยังเตี้ยอยู่', examplePhonetic: 'dtôn-mái dtôn níi yang tîa yùu', exampleEn: 'This tree is still short.' },
+      { id: 5, thai: 'ยาว', phonetic: 'yaao', english: 'Long (length)', category: 'size', opposite: 'สั้น (sân) - Short', exampleThai: 'ยีราฟมีคอยาวมาก', examplePhonetic: 'yii-ráap mii khaaw yaao mâak', exampleEn: 'Giraffes have very long necks.' },
+      { id: 6, thai: 'สั้น', phonetic: 'sân', english: 'Short (length)', category: 'size', opposite: 'ยาว (yaao) - Long', exampleThai: 'เธอใส่กระโปรงสั้น', examplePhonetic: 'thooe sài grà-bproong sân', exampleEn: 'She wears a short skirt.' },
+      { id: 7, thai: 'อ้วน', phonetic: 'ûan', english: 'Fat', category: 'appearance', opposite: 'ผอม (phǒm) - Thin', exampleThai: 'แมวตัวนี้อ้วนน่ารัก', examplePhonetic: 'maaeo dtuua níi ûan nâa-rák', exampleEn: 'This cat is fat and cute.' },
+      { id: 8, thai: 'ผอม', phonetic: 'phǒm', english: 'Thin', category: 'appearance', opposite: 'อ้วน (ûan) - Fat', exampleThai: 'เขาดูผอมลงมาก', examplePhonetic: 'khăo duu phǒm long mâak', exampleEn: 'He looks a lot thinner.' },
+      { id: 9, thai: 'สวย', phonetic: 'sŭai', english: 'Beautiful', category: 'appearance', opposite: 'ไม่สวย (mâi sŭai)', exampleThai: 'ดอกไม้สีชมพูนี้สวยมาก', examplePhonetic: 'dàawk-mái sǐi-chom-phuu níi sŭai mâak', exampleEn: 'This pink flower is very beautiful.' },
+      { id: 10, thai: 'หล่อ', phonetic: 'lòor', english: 'Handsome', category: 'appearance', opposite: null, exampleThai: 'พี่ชายของเธอหล่อมาก', examplePhonetic: 'phîi-chaai khǎawng thooe lòor mâak', exampleEn: 'Her older brother is very handsome.' },
+      { id: 11, thai: 'น่ารัก', phonetic: 'nâa-rák', english: 'Cute', category: 'appearance', opposite: null, exampleThai: 'เด็กคนนี้น่ารักมาก', examplePhonetic: 'dèk khon níi nâa-rák mâak', exampleEn: 'This child is very cute.' },
+      { id: 12, thai: 'ใหม่', phonetic: 'mài', english: 'New', category: 'state', opposite: 'เก่า (gào) - Old', exampleThai: 'ฉันเพิ่งซื้อรถใหม่', examplePhonetic: 'chăn phôoeng súue rót mài', exampleEn: 'I just bought a new car.' },
+      { id: 13, thai: 'เก่า', phonetic: 'gào', english: 'Old (things)', category: 'state', opposite: 'ใหม่ (mài) - New', exampleThai: 'หนังสือเล่มนี้เก่าแล้ว', examplePhonetic: 'năng-sŭue lêm níi gào láaeo', exampleEn: 'This book is already old.' },
+      { id: 14, thai: 'สะอาด', phonetic: 'sà-àat', english: 'Clean', category: 'state', opposite: 'สกปรก (sòk-gà-bpròk) - Dirty', exampleThai: 'ห้องน้ำสะอาดเรียบร้อยดี', examplePhonetic: 'hâawng-náam sà-àat riiap-ráawy dii', exampleEn: 'The bathroom is clean and orderly.' },
+      { id: 15, thai: 'สกปรก', phonetic: 'sòk-gà-bpròk', english: 'Dirty', category: 'state', opposite: 'สะอาด (sà-àat) - Clean', exampleThai: 'รองเท้าคู่นี้สกปรก', examplePhonetic: 'raawng-tháao khûu níi sòk-gà-bpròk', exampleEn: 'These shoes are dirty.' },
+      { id: 16, thai: 'เร็ว', phonetic: 'reo', english: 'Fast', category: 'state', opposite: 'ช้า (cháa) - Slow', exampleThai: 'กระต่ายวิ่งเร็วมาก', examplePhonetic: 'grà-dtàai wîng reo mâak', exampleEn: 'The rabbit runs very fast.' },
+      { id: 17, thai: 'ช้า', phonetic: 'cháa', english: 'Slow', category: 'state', opposite: 'เร็ว (reo) - Fast', exampleThai: 'เต่าเดินช้าแต่ไม่หยุด', examplePhonetic: 'dtào dooen cháa dtàae mâi yùt', exampleEn: 'The turtle walks slowly but doesn\'t stop.' },
+      { id: 18, thai: 'ร้อน', phonetic: 'ráawn', english: 'Hot', category: 'state', opposite: 'หนาว (năao) - Cold', exampleThai: 'วันนี้อากาศร้อนมาก', examplePhonetic: 'wan-níi aa-gàat ráawn mâak', exampleEn: 'Today the weather is very hot.' },
+      { id: 19, thai: 'หนาว', phonetic: 'năao', english: 'Cold', category: 'state', opposite: 'ร้อน (ráawn) - Hot', exampleThai: 'หน้าหนาวฉันใส่เสื้อหนา', examplePhonetic: 'nâa năao chăn sài sûuea năa', exampleEn: 'In winter I wear thick clothes.' },
+      { id: 20, thai: 'ง่าย', phonetic: 'ngâai', english: 'Easy', category: 'state', opposite: 'ยาก (yâak) - Difficult', exampleThai: 'บทเรียนนี้ง่ายมาก', examplePhonetic: 'bòt-riian níi ngâai mâak', exampleEn: 'This lesson is very easy.' },
+      { id: 21, thai: 'ยาก', phonetic: 'yâak', english: 'Difficult', category: 'state', opposite: 'ง่าย (ngâai) - Easy', exampleThai: 'ข้อสอบข้อนี้ยากจริง ๆ', examplePhonetic: 'khâaw-sàawp khâaw níi yâak jing jing', exampleEn: 'This exam question is truly difficult.' },
+      { id: 22, thai: 'แพง', phonetic: 'phaaeng', english: 'Expensive', category: 'state', opposite: 'ถูก (thùuk) - Cheap', exampleThai: 'กระเป๋าใบนี้ราคาแพง', examplePhonetic: 'grà-bpǎo bai níi raa-khaa phaaeng', exampleEn: 'This bag is expensive.' },
+      { id: 23, thai: 'ถูก', phonetic: 'thùuk', english: 'Cheap', category: 'state', opposite: 'แพง (phaaeng) - Expensive', exampleThai: 'ผลไม้ที่ตลาดราคาถูก', examplePhonetic: 'phǒn-lá-mái thîi dtà-làat raa-khaa thùuk', exampleEn: 'Fruit at the market is cheap.' },
+      { id: 24, thai: 'ยุ่ง', phonetic: 'yûng', english: 'Busy', category: 'state', opposite: 'ว่าง (wâang) - Free', exampleThai: 'ตอนนี้ฉันยุ่งมาก', examplePhonetic: 'dtawn-níi chăn yûng mâak', exampleEn: 'Right now I am very busy.' },
+      { id: 25, thai: 'ว่าง', phonetic: 'wâang', english: 'Free / Available', category: 'state', opposite: 'ยุ่ง (yûng) - Busy', exampleThai: 'พรุ่งนี้คุณว่างไหม', examplePhonetic: 'phrûng-níi khun wâang mái', exampleEn: 'Are you free tomorrow?' },
+      { id: 26, thai: 'มีความสุข', phonetic: 'mii-khwaam-sùk', english: 'Happy', category: 'state', opposite: 'เศร้า (sâo) - Sad', exampleThai: 'วันนี้ฉันมีความสุขมาก', examplePhonetic: 'wan-níi chăn mii-khwaam-sùk mâak', exampleEn: 'Today I am very happy.' },
+      { id: 27, thai: 'เศร้า', phonetic: 'sâo', english: 'Sad', category: 'state', opposite: 'มีความสุข (mii-khwaam-sùk) - Happy', exampleThai: 'อย่าเศร้าไปเลยนะ', examplePhonetic: 'yàa sâo bpai looei ná', exampleEn: 'Don\'t be sad.' },
+      { id: 28, thai: 'แข็งแรง', phonetic: 'kăaeng-raaeng', english: 'Strong', category: 'state', opposite: null, exampleThai: 'ออกกำลังกายทำให้แข็งแรง', examplePhonetic: 'àawk-gam-lang-gaai tham hâi kăaeng-raaeng', exampleEn: 'Exercising makes you strong.' },
+      { id: 29, thai: 'รวย', phonetic: 'ruuai', english: 'Rich', category: 'state', opposite: 'จน (jon) - Poor', exampleThai: 'เขาเป็นคนรวยและใจดี', examplePhonetic: 'khăo bpen khon ruuai láe jai-dii', exampleEn: 'He is rich and kind.' },
+      { id: 30, thai: 'จน', phonetic: 'jon', english: 'Poor', category: 'state', opposite: 'รวย (ruuai) - Rich', exampleThai: 'แม้จะจนแต่เขามีความสุข', examplePhonetic: 'máae jà jon dtàae khăo mii-khwaam-sùk', exampleEn: 'Even though poor, he is happy.' },
+      { id: 31, thai: 'น่าสนใจ', phonetic: 'nâa-sǒn-jai', english: 'Interesting', category: 'state', opposite: null, exampleThai: 'ภาษาไทยน่าสนใจมาก', examplePhonetic: 'phaa-săa thai nâa-sǒn-jai mâak', exampleEn: 'Thai language is very interesting.' },
+      { id: 32, thai: 'อร่อย', phonetic: 'à-ràwy', english: 'Delicious', category: 'taste', opposite: null, exampleThai: 'อาหารร้านนี้อร่อยมาก', examplePhonetic: 'aa-hăan ráan níi à-ràwy mâak', exampleEn: 'Food at this restaurant is very delicious.' },
+      { id: 33, thai: 'หวาน', phonetic: 'wăan', english: 'Sweet', category: 'taste', opposite: null, exampleThai: 'น้ำผลไม้นี้หวานชื่นใจ', examplePhonetic: 'náam phǒn-lá-mái níi wăan chûuen-jai', exampleEn: 'This fruit juice is refreshingly sweet.' },
+      { id: 34, thai: 'เปรี้ยว', phonetic: 'bprîao', english: 'Sour', category: 'taste', opposite: null, exampleThai: 'มะนาวลูกนี้เปรี้ยวมาก', examplePhonetic: 'má-naao lûuk níi bprîao mâak', exampleEn: 'This lime is very sour.' },
+      { id: 35, thai: 'เค็ม', phonetic: 'khem', english: 'Salty', category: 'taste', opposite: null, exampleThai: 'ต้มยำชามนี้เค็มไปนิด', examplePhonetic: 'dtôm-yam chaam níi khem bpai nít', exampleEn: 'This Tom Yum is slightly too salty.' },
+      { id: 36, thai: '...กว่า', phonetic: '...gwàa', english: 'More... / -er (comparative)', category: 'grammar', opposite: null, exampleThai: 'อันนี้ใหญ่กว่าอันนั้น', examplePhonetic: 'an níi yài gwàa an nán', exampleEn: 'This one is bigger than that one.' },
+      { id: 37, thai: '...ที่สุด', phonetic: '...thîi-sùt', english: 'The most... / -est (superlative)', category: 'grammar', opposite: null, exampleThai: 'ร้านนี้อร่อยที่สุด', examplePhonetic: 'ráan níi à-ràwy thîi-sùt', exampleEn: 'This shop is the most delicious.' },
+      { id: 38, thai: 'เด็ก', phonetic: 'dèk', english: 'Child / Kid', category: 'grammar', opposite: null, exampleThai: 'เด็กชอบเล่นในสวน', examplePhonetic: 'dèk châawp lên nai sŭuan', exampleEn: 'Children like playing in the park.' },
+      { id: 39, thai: 'ผู้หญิง', phonetic: 'phûu-yǐng', english: 'Woman / Girl', category: 'grammar', opposite: 'ผู้ชาย (phûu-chaai) - Man', exampleThai: 'ผู้หญิงคนนั้นสวยมาก', examplePhonetic: 'phûu-yǐng khon nán sŭai mâak', exampleEn: 'That woman is very beautiful.' },
+      { id: 40, thai: 'ผู้ชาย', phonetic: 'phûu-chaai', english: 'Man / Boy', category: 'grammar', opposite: 'ผู้หญิง (phûu-yǐng) - Woman', exampleThai: 'ผู้ชายคนนั้นตัวสูง', examplePhonetic: 'phûu-chaai khon nán dtuua sŭung', exampleEn: 'That man is tall.' },
+      { id: 41, thai: 'ตื่นเช้า', phonetic: 'dtʉ̀ʉn cháo', english: 'Wake up early', category: 'state', opposite: 'ตื่นสาย (dtʉ̀ʉn sǎai) - Wake up late', exampleThai: 'วันนี้ฉันตื่นเช้า', examplePhonetic: 'wan-níi chăn dtʉ̀ʉn cháo', exampleEn: 'Today I woke up early.' },
+      { id: 42, thai: 'ตื่นสาย', phonetic: 'dtʉ̀ʉn sǎai', english: 'Wake up late', category: 'state', opposite: 'ตื่นเช้า (dtʉ̀ʉn cháo) - Wake up early', exampleThai: 'เมื่อคืนนอนดึก วันนี้ก็เลยตื่นสาย', examplePhonetic: 'mûuea-khuuen naawn dùek, wan-níi gâaw-looei dtʉ̀ʉn sǎai', exampleEn: 'Last night I went to bed late, so today I woke up late.' },
+      { id: 43, thai: 'สะดวก', phonetic: 'sà-dùak', english: 'Convenient', category: 'state', opposite: null, exampleThai: 'ตอนนี้คุณสะดวกไหม', examplePhonetic: 'dtawn-níi khun sà-dùak mái', exampleEn: 'Is it convenient for you right now?' }
+    ];
+
+    // State Variables
+    let filteredList = [...vocabData];
+    let currentIndex = 0;
+    let isFlipped = false;
+    let slowAudio = false;
+    let starredSet = new Set();
+    let needsWorkSet = new Set();
+    let currentFilter = 'all';
+
+    // Thai Font Sizing State
+    const thaiFontSizes = [
+      { id: 'large', label: 'Thai: Large', classes: ['text-5xl', 'sm:text-6xl', 'md:text-7xl'] },
+      { id: 'xl', label: 'Thai: Extra Large (XL)', classes: ['text-6xl', 'sm:text-7xl', 'md:text-8xl'] },
+      { id: 'normal', label: 'Thai: Standard', classes: ['text-4xl', 'sm:text-5xl', 'md:text-6xl'] }
+    ];
+    let thaiSizeIndex = 0;
+
+    // High-fidelity speech synthesizer using native Thai language engine
+    function playAudioText(rawText) {
+      if (!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+
+      // Clean Thai text: strip English romanization and parentheses
+      const cleanThai = rawText.replace(/[a-zA-Z0-9\(\)\-–\.,\/]/g, '').trim();
+      if (!cleanThai) return;
+
+      const utterance = new SpeechSynthesisUtterance(cleanThai);
+      utterance.lang = 'th-TH';
+      utterance.rate = slowAudio ? 0.65 : 0.95;
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function playCurrentAudio() {
+      const card = filteredList[currentIndex];
+      if (card) playAudioText(card.thai);
+    }
+
+    function toggleSlowAudio() {
+      slowAudio = !slowAudio;
+      const label = document.getElementById('slow-audio-label');
+      const btn = document.getElementById('slow-audio-btn');
+      if (label && btn) {
+        if (slowAudio) {
+          label.textContent = '0.65x Turtle';
+          btn.classList.add('bg-amber-100', 'border-amber-300', 'text-amber-900');
+        } else {
+          label.textContent = 'Normal Speed';
+          btn.classList.remove('bg-amber-100', 'border-amber-300', 'text-amber-900');
+        }
+      }
+    }
+
+    function cycleThaiFontSize() {
+      thaiSizeIndex = (thaiSizeIndex + 1) % thaiFontSizes.length;
+      const current = thaiFontSizes[thaiSizeIndex];
+      const label = document.getElementById('thai-size-label');
+      if (label) label.textContent = current.label;
+
+      const scriptEl = document.getElementById('card-thai-script');
+      if (scriptEl) {
+        scriptEl.classList.remove('text-4xl', 'text-5xl', 'text-6xl', 'text-7xl', 'text-8xl');
+        current.classes.forEach(c => scriptEl.classList.add(c));
+      }
+    }
+
+    function renderCurrentCard() {
+      if (filteredList.length === 0) {
+        document.getElementById('card-counter').textContent = 'No cards found';
+        document.getElementById('card-thai-script').textContent = '—';
+        document.getElementById('card-romanization').textContent = '—';
+        document.getElementById('card-formatted-full').textContent = 'No cards in this category';
+        document.getElementById('card-english').textContent = 'Select another category';
+        document.getElementById('card-back-header').textContent = '';
+        document.getElementById('card-opposite-container').classList.add('hidden');
+        return;
+      }
+
+      if (currentIndex >= filteredList.length) currentIndex = 0;
+      if (currentIndex < 0) currentIndex = filteredList.length - 1;
+
+      const card = filteredList[currentIndex];
+
+      // Ensure card faces are right side up
+      if (isFlipped) {
+        isFlipped = false;
+        document.getElementById('flashcard-inner').classList.remove('rotate-y-180');
+      }
+
+      // Update Front Face
+      document.getElementById('card-counter').textContent = `Card ${currentIndex + 1} of ${filteredList.length}`;
+      document.getElementById('card-category-badge').textContent = card.category;
+      document.getElementById('card-thai-script').textContent = card.thai;
+      document.getElementById('card-romanization').textContent = `(${card.phonetic})`;
+      document.getElementById('card-formatted-full').textContent = `${card.thai} (${card.phonetic})`;
+
+      // Update Back Face
+      document.getElementById('card-back-cat').textContent = card.category.toUpperCase();
+      document.getElementById('card-english').textContent = card.english;
+      document.getElementById('card-back-header').textContent = `${card.thai} (${card.phonetic})`;
+
+      // Opposite pair
+      const oppContainer = document.getElementById('card-opposite-container');
+      const oppText = document.getElementById('card-opposite-text');
+      if (card.opposite) {
+        oppContainer.classList.remove('hidden');
+        oppText.textContent = card.opposite;
+      } else {
+        oppContainer.classList.add('hidden');
+      }
+
+      // Example sentence
+      document.getElementById('card-example-thai').textContent = card.exampleThai || card.thai;
+      document.getElementById('card-example-phonetics').textContent = card.examplePhonetic || card.phonetic;
+      document.getElementById('card-example-en').textContent = card.exampleEn || card.english;
+
+      // Update Star Icon
+      const starBtn = document.getElementById('btn-star');
+      if (starBtn) {
+        starBtn.textContent = starredSet.has(card.id) ? '★' : '☆';
+        starBtn.className = starredSet.has(card.id) ? 'text-amber-500 text-base' : 'text-slate-400 hover:text-amber-500 text-base';
+      }
+    }
+
+    function flipCard() {
+      isFlipped = !isFlipped;
+      const inner = document.getElementById('flashcard-inner');
+      if (isFlipped) {
+        inner.classList.add('rotate-y-180');
+      } else {
+        inner.classList.remove('rotate-y-180');
+      }
+    }
+
+    function prevCard() {
+      currentIndex--;
+      renderCurrentCard();
+    }
+
+    function nextCard() {
+      currentIndex++;
+      renderCurrentCard();
+    }
+
+    function shuffleDeck() {
+      for (let i = filteredList.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [filteredList[i], filteredList[j]] = [filteredList[j], filteredList[i]];
+      }
+      currentIndex = 0;
+      renderCurrentCard();
+    }
+
+    function markCard(gotIt) {
+      const card = filteredList[currentIndex];
+      if (!card) return;
+
+      if (gotIt) {
+        needsWorkSet.delete(card.id);
+      } else {
+        needsWorkSet.add(card.id);
+      }
+      document.getElementById('count-needs-work').textContent = needsWorkSet.size;
+      nextCard();
+    }
+
+    function toggleStarCurrent() {
+      const card = filteredList[currentIndex];
+      if (!card) return;
+      if (starredSet.has(card.id)) {
+        starredSet.delete(card.id);
+      } else {
+        starredSet.add(card.id);
+      }
+      renderCurrentCard();
+    }
+
+    function setFilter(cat) {
+      currentFilter = cat;
+      document.querySelectorAll('.category-btn').forEach(btn => {
+        btn.classList.remove('bg-amber-500', 'text-white', 'font-bold');
+        btn.classList.add('bg-slate-100', 'text-slate-700', 'font-medium');
+      });
+
+      const activeBtn = document.getElementById(`filter-${cat}`);
+      if (activeBtn) {
+        activeBtn.classList.remove('bg-slate-100', 'text-slate-700', 'font-medium');
+        activeBtn.classList.add('bg-amber-500', 'text-white', 'font-bold');
+      }
+
+      if (cat === 'all') {
+        filteredList = [...vocabData];
+      } else if (cat === 'needs-work') {
+        filteredList = vocabData.filter(item => needsWorkSet.has(item.id));
+      } else {
+        filteredList = vocabData.filter(item => item.category === cat);
+      }
+
+      currentIndex = 0;
+      renderCurrentCard();
+    }
+
+    let quizDeck = [];
+    let quizIndex = 0;
+    let quizScore = 0;
+    let currentQuizCard = null;
+
+    function startQuiz() {
+      quizDeck = [...vocabData].sort(() => Math.random() - 0.5).slice(0, 10);
+      quizIndex = 0;
+      quizScore = 0;
+      document.getElementById('quiz-score').textContent = '0';
+      renderQuizQuestion();
+    }
+
+    function renderQuizQuestion() {
+      if (quizIndex >= quizDeck.length) {
+        showQuizResults();
+        return;
+      }
+
+      currentQuizCard = quizDeck[quizIndex];
+      document.getElementById('quiz-progress-text').textContent = `Question ${quizIndex + 1} of ${quizDeck.length}`;
+      document.getElementById('quiz-progress-bar').style.width = `${((quizIndex + 1) / quizDeck.length) * 100}%`;
+      
+      // Strict question format: Thai script + phonetics in parentheses
+      document.getElementById('quiz-thai-word').textContent = `${currentQuizCard.thai} (${currentQuizCard.phonetic})`;
+      document.getElementById('quiz-next-btn').classList.add('hidden');
+
+      // 4 Randomized options
+      const distractors = vocabData
+        .filter(c => c.id !== currentQuizCard.id)
+        .sort(() => Math.random() - 0.5)
+        .slice(0, 3)
+        .map(c => c.english);
+
+      const options = [currentQuizCard.english, ...distractors].sort(() => Math.random() - 0.5);
+
+      const container = document.getElementById('quiz-options-container');
+      container.innerHTML = '';
+
+      options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'quiz-opt-btn p-3.5 rounded-2xl border-2 border-slate-200 hover:border-amber-400 bg-white hover:bg-amber-50/50 text-slate-800 font-semibold text-xs text-left transition-all';
+        btn.textContent = opt;
+        btn.onclick = () => selectQuizOption(btn, opt);
+        container.appendChild(btn);
+      });
+    }
+
+    function selectQuizOption(btn, chosen) {
+      const isCorrect = (chosen === currentQuizCard.english);
+      const allBtns = document.querySelectorAll('.quiz-opt-btn');
+      allBtns.forEach(b => b.disabled = true);
+
+      if (isCorrect) {
+        btn.classList.remove('border-slate-200', 'bg-white');
+        btn.classList.add('border-emerald-500', 'bg-emerald-50', 'text-emerald-900');
+        quizScore++;
+        document.getElementById('quiz-score').textContent = quizScore;
+      } else {
+        btn.classList.remove('border-slate-200', 'bg-white');
+        btn.classList.add('border-rose-500', 'bg-rose-50', 'text-rose-900');
+        allBtns.forEach(b => {
+          if (b.textContent === currentQuizCard.english) {
+            b.classList.remove('border-slate-200', 'bg-white');
+            b.classList.add('border-emerald-500', 'bg-emerald-50', 'text-emerald-900');
+          }
+        });
+      }
+
+      document.getElementById('quiz-next-btn').classList.remove('hidden');
+    }
+
+    function playQuizAudio() {
+      if (currentQuizCard) playAudioText(currentQuizCard.thai);
+    }
+
+    function nextQuizQuestion() {
+      quizIndex++;
+      renderQuizQuestion();
+    }
+
+    function showQuizResults() {
+      const container = document.getElementById('quiz-options-container');
+      document.getElementById('quiz-thai-word').textContent = `Final Score: ${quizScore} / ${quizDeck.length}`;
+      container.innerHTML = `
+        <div class="col-span-full text-center py-4">
+          <p class="text-xs text-slate-600 mb-4">${quizScore >= 8 ? '🌟 Outstanding mastery!' : '💪 Keep reviewing to boost your recall!'}</p>
+          <button onclick="startQuiz()" class="px-5 py-2.5 bg-amber-500 hover:bg-amber-600 text-white text-xs font-bold rounded-xl transition-all shadow-xs">
+            Restart Quiz
+          </button>
+        </div>
+      `;
+      document.getElementById('quiz-next-btn').classList.add('hidden');
+    }
+
+    let matchFirstTile = null;
+    let matchLock = false;
+    let matchedPairsCount = 0;
+    const MATCH_PAIRS_COUNT = 6;
+
+    function initMatchGame() {
+      const grid = document.getElementById('match-grid');
+      const winMsg = document.getElementById('match-win-msg');
+      if (!grid) return;
+      grid.innerHTML = '';
+      if (winMsg) winMsg.classList.add('hidden');
+      matchFirstTile = null;
+      matchLock = false;
+      matchedPairsCount = 0;
+
+      const selectedCards = [...vocabData].sort(() => Math.random() - 0.5).slice(0, MATCH_PAIRS_COUNT);
+      let tiles = [];
+
+      selectedCards.forEach(card => {
+        // Strict format: Thai (phonetic)
+        tiles.push({ id: card.id, text: `${card.thai} (${card.phonetic})`, type: 'thai', rawThai: card.thai });
+        tiles.push({ id: card.id, text: card.english, type: 'english' });
+      });
+
+      tiles.sort(() => Math.random() - 0.5);
+
+      tiles.forEach(tile => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = "match-tile min-h-[5.5rem] p-3 rounded-2xl border-2 border-slate-200 bg-white hover:bg-slate-50 text-slate-800 text-xs font-semibold flex items-center justify-center text-center transition-all shadow-2xs select-none";
+        if (tile.type === 'thai') {
+          btn.classList.add('font-thai', 'text-sm', 'font-bold', 'leading-relaxed', 'tracking-wide');
+        }
+        btn.textContent = tile.text;
+        btn.onclick = () => handleMatchClick(tile, btn);
+        grid.appendChild(btn);
+      });
+    }
+
+    function handleMatchClick(tile, btnEl) {
+      if (matchLock || btnEl.classList.contains('matched') || btnEl === matchFirstTile?.el) return;
+
+      if (!matchFirstTile) {
+        matchFirstTile = { tile, el: btnEl };
+        btnEl.classList.remove('bg-white', 'border-slate-200');
+        btnEl.classList.add('bg-amber-100', 'border-amber-400', 'text-amber-900', 'ring-2', 'ring-amber-300');
+        if (tile.type === 'thai') playAudioText(tile.rawThai);
+        return;
+      }
+
+      // Second tile selected
+      const first = matchFirstTile;
+      matchLock = true;
+      btnEl.classList.remove('bg-white', 'border-slate-200');
+      btnEl.classList.add('bg-amber-100', 'border-amber-400', 'text-amber-900', 'ring-2', 'ring-amber-300');
+
+      if (first.tile.id === tile.id && first.tile.type !== tile.type) {
+        // MATCH!
+        setTimeout(() => {
+          [first.el, btnEl].forEach(el => {
+            el.className = "match-tile matched min-h-[5.5rem] p-3 rounded-2xl border-2 border-emerald-400 bg-emerald-50 text-emerald-800 text-xs font-bold flex items-center justify-center text-center cursor-default select-none";
+            if (el.textContent.includes('(')) el.classList.add('font-thai', 'text-sm');
+          });
+          matchedPairsCount++;
+          matchFirstTile = null;
+          matchLock = false;
+
+          if (matchedPairsCount >= MATCH_PAIRS_COUNT) {
+            const winMsg = document.getElementById('match-win-msg');
+            if (winMsg) winMsg.classList.remove('hidden');
+          }
+        }, 350);
+      } else {
+        // MISMATCH
+        setTimeout(() => {
+          [first.el, btnEl].forEach(el => {
+            el.classList.remove('bg-amber-100', 'border-amber-400', 'text-amber-900', 'ring-2', 'ring-amber-300');
+            el.classList.add('bg-rose-100', 'border-rose-400', 'text-rose-800');
+          });
+        }, 250);
+
+        setTimeout(() => {
+          [first.el, btnEl].forEach(el => {
+            el.className = "match-tile min-h-[5.5rem] p-3 rounded-2xl border-2 border-slate-200 bg-white hover:bg-slate-50 text-slate-800 text-xs font-semibold flex items-center justify-center text-center transition-all shadow-2xs select-none";
+            if (el.textContent.includes('(')) el.classList.add('font-thai', 'text-sm', 'font-bold', 'leading-relaxed', 'tracking-wide');
+          });
+          matchFirstTile = null;
+          matchLock = false;
+        }, 850);
+      }
+    }
+
+    function renderVocabTable(data = vocabData) {
+      const tbody = document.getElementById('vocab-table-body');
+      const countEl = document.getElementById('table-count');
+      if (!tbody) return;
+      tbody.innerHTML = '';
+      if (countEl) countEl.textContent = data.length;
+
+      data.forEach((item, index) => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-50 transition-colors";
+        tr.innerHTML = `
+          <td class="py-3 px-3.5 text-slate-400 font-mono text-[11px]">${index + 1}</td>
+          <td class="py-3 px-3.5">
+            <span class="font-thai font-bold text-slate-950 text-base leading-relaxed tracking-wide">${item.thai}</span>
+            <span class="text-rose-600 font-medium text-xs ml-1 font-sans">(${item.phonetic})</span>
+          </td>
+          <td class="py-3 px-3.5 text-slate-700 font-semibold">${item.english}</td>
+          <td class="py-3 px-3.5">
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-slate-100 text-slate-600 uppercase tracking-wide">
+              ${item.category}
+            </span>
+          </td>
+          <td class="py-3 px-3.5 text-center">
+            <button onclick="playAudioText('${item.thai}')" class="p-1.5 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-700 transition-colors" title="Listen">
+              🔊
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function filterWordTable() {
+      const query = document.getElementById('table-search').value.toLowerCase().trim();
+      const filtered = vocabData.filter(item => 
+        item.thai.includes(query) ||
+        item.phonetic.toLowerCase().includes(query) ||
+        item.english.toLowerCase().includes(query) ||
+        item.category.toLowerCase().includes(query)
+      );
+      renderVocabTable(filtered);
+    }
+
+    function switchTab(tab) {
+      ['flashcards', 'quiz', 'match', 'list'].forEach(t => {
+        const view = document.getElementById(`view-${t}`);
+        const btn = document.getElementById(`tab-${t}`);
+        if (view) view.classList.add('hidden');
+        if (btn) {
+          btn.classList.remove('bg-white', 'text-slate-900', 'shadow-xs');
+          btn.classList.add('text-slate-600');
+        }
+      });
+
+      const activeView = document.getElementById(`view-${tab}`);
+      const activeBtn = document.getElementById(`tab-${tab}`);
+      if (activeView) activeView.classList.remove('hidden');
+      if (activeBtn) {
+        activeBtn.classList.remove('text-slate-600');
+        activeBtn.classList.add('bg-white', 'text-slate-900', 'shadow-xs');
+      }
+
+      if (tab === 'quiz') startQuiz();
+      if (tab === 'match') initMatchGame();
+      if (tab === 'list') renderVocabTable();
+    }
+
+    // Keyboard controls for rapid study
+    window.addEventListener('keydown', (e) => {
+      const flashcardsVisible = !document.getElementById('view-flashcards').classList.contains('hidden');
+      if (!flashcardsVisible) return;
+
+      if (e.code === 'Space') {
+        e.preventDefault();
+        flipCard();
+      } else if (e.code === 'ArrowRight') {
+        nextCard();
+      } else if (e.code === 'ArrowLeft') {
+        prevCard();
+      }
+    });
+
+    // Initialize application on window load
+    window.addEventListener('DOMContentLoaded', () => {
+      renderCurrentCard();
+      renderVocabTable();
+      document.getElementById('count-all').textContent = vocabData.length;
+    });
+  </script>
+</body>
+</html>
